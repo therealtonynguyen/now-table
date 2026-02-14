@@ -118,12 +118,12 @@ export class NowTable extends LitElement {
       position: sticky;
       left: 0;
       z-index: 3;
-      background: oklch(var(--b2)) !important;
+      background: oklch(var(--b2) / 1) !important;
       border-right: 1px solid oklch(var(--b3) / 0.6);
     }
 
     .header-cell-actions:hover {
-      background: oklch(var(--b2));
+      background: oklch(var(--b2) / 1);
     }
 
     .data-cell-actions {
@@ -140,11 +140,11 @@ export class NowTable extends LitElement {
       position: sticky;
       left: 0;
       z-index: 2;
-      background: oklch(var(--b1)) !important;
+      background: oklch(var(--b1) / 1) !important;
     }
 
     .data-row:hover .data-cell-actions {
-      background: oklch(var(--b2)) !important;
+      background: oklch(var(--b2) / 1) !important;
     }
 
     .data-row.selected-row .data-cell-actions {
@@ -484,22 +484,24 @@ export class NowTable extends LitElement {
       position: sticky;
       z-index: 2;
       box-shadow: 2px 0 4px -1px rgba(0, 0, 0, 0.08);
+      /* Opaque background so scrolling columns don't show through */
+      background-color: oklch(var(--b1) / 1) !important;
     }
 
     .header-row .frozen-cell {
-      background: oklch(var(--b2)) !important;
+      background: oklch(var(--b2) / 1) !important;
     }
 
     .header-cell.frozen-cell:hover {
-      background: oklch(var(--b3)) !important;
+      background: oklch(var(--b3) / 1) !important;
     }
 
     .data-row .frozen-cell {
-      background: oklch(var(--b1)) !important;
+      background: oklch(var(--b1) / 1) !important;
     }
 
     .data-row:hover .frozen-cell {
-      background: oklch(var(--b2)) !important;
+      background: oklch(var(--b2) / 1) !important;
     }
 
     .data-row.selected-row .frozen-cell {
@@ -511,11 +513,11 @@ export class NowTable extends LitElement {
     }
 
     .group-header .frozen-cell {
-      background: oklch(var(--b3)) !important;
+      background: oklch(var(--b3) / 1) !important;
     }
 
     .group-header:hover .frozen-cell {
-      background: oklch(var(--b4)) !important;
+      background: oklch(var(--b4) / 1) !important;
     }
 
     .virtualizer-wrapper {
@@ -552,11 +554,11 @@ export class NowTable extends LitElement {
     }
 
     .data-row.zebra-even .data-cell-actions {
-      background: oklch(var(--b3) / 0.55) !important;
+      background: oklch(var(--b3) / 1) !important;
     }
 
     .data-row.zebra-even .frozen-cell {
-      background: oklch(var(--b3) / 0.55) !important;
+      background: oklch(var(--b3) / 1) !important;
     }
 
     .data-row.zebra-even:hover {
@@ -565,7 +567,7 @@ export class NowTable extends LitElement {
 
     .data-row.zebra-even:hover .data-cell-actions,
     .data-row.zebra-even:hover .frozen-cell {
-      background: oklch(var(--b3) / 0.7) !important;
+      background: oklch(var(--b3) / 1) !important;
     }
 
     .data-row.zebra-even.selected-row {
