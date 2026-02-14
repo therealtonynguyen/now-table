@@ -54,6 +54,13 @@ const sampleRecords: TableRecord[] = [
 type ScrollMode = 'virtualization' | 'pagination';
 type ViewType = 'grid' | 'kanban' | 'gallery' | 'forms' | 'calendar' | 'map';
 type Density = 'comfortable' | 'compact';
+type Theme = 'polaris' | 'light' | 'dark';
+
+const THEME_OPTIONS: { value: Theme; label: string }[] = [
+  { value: 'polaris', label: 'ServiceNow Polaris' },
+  { value: 'light', label: 'Light' },
+  { value: 'dark', label: 'Dark' },
+];
 
 defaultViewRegistry.setGetViewForSchema((_schema) => 'grid');
 
@@ -69,6 +76,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   let dataSize = 10_000;
   let density: Density = 'comfortable';
   let zebraStripes = false;
+  let theme: Theme = 'polaris';
   let googleMapsApiKey = (import.meta as unknown as { env?: { VITE_GOOGLE_MAPS_API_KEY?: string } }).env?.VITE_GOOGLE_MAPS_API_KEY ?? '';
   let allRecords: TableRecord[] = sampleRecords;
 
@@ -81,6 +89,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   table.viewType = 'grid';
   table.calendarDateColumnId = 'opened_at';
   table.googleMapsApiKey = googleMapsApiKey;
+
+  function applyTheme(themeName: Theme) {
+    theme = themeName;
+    document.documentElement.setAttribute('data-theme', themeName);
+  }
 
   function applyState() {
     table.layout = makeLayout(freezeColumns);
@@ -124,6 +137,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       </header>
 
       <div class="flex flex-wrap items-center gap-4 p-4 rounded-lg bg-base-100 border border-base-300 mb-4 flex-shrink-0">
+        <fieldset class="flex items-center gap-2">
+          <label class="text-sm font-medium text-base-content/80" for="theme-select">Theme:</label>
+          <select id="theme-select" class="select select-bordered select-sm w-44">
+            ${THEME_OPTIONS.map((o) => `<option value="${o.value}" ${theme === o.value ? 'selected' : ''}>${o.label}</option>`).join('')}
+          </select>
+        </fieldset>
+        <div class="divider divider-horizontal mx-0"></div>
         <fieldset class="flex items-center gap-2">
           <legend class="sr-only">Scroll mode</legend>
           <span class="text-sm font-medium text-base-content/80">Scroll:</span>
@@ -229,6 +249,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       currentPage++;
       applyState();
     }
+  });
+  document.getElementById('theme-select')?.addEventListener('change', (e) => {
+    applyTheme((e.target as HTMLSelectElement).value as Theme);
   });
   document.getElementById('view-select')?.addEventListener('change', (e) => {
     viewType = (e.target as HTMLSelectElement).value as ViewType;
